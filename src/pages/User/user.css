@@ -1,0 +1,153 @@
+
+
+
+.profile {
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: auto;
+    border-radius: 8px;
+}
+
+
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.profile h1 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.profile p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.stats span {
+    cursor: pointer;
+}
+
+.profile .stats {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 2px solid #d3cdcd;
+}
+.profile .stats .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile .stats .stat strong {
+    font-weight: bold;
+}
+.profile .stats .stat span {
+    color: #666;
+    font-size: 12px;
+}
+.edit-profile {
+    display: flex;
+    justify-content: flex-end;
+}
+.edit-profile a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.edit-profile button {
+    border: 1px solid #5036f5 ;
+    border-radius: 4px;
+    background-color: #5036f5;
+    color: #ffffff;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.edit-profile button:hover {
+    background-color: transparent;
+    color: #5036f5;
+}
+
+.edit-profile a:hover {
+    color: #003f72;
+}
+
+.user-list-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .user-list-overlay .denuncia {
+    color: red;
+    margin-left: 8px;
+    margin-bottom: 8px;
+  }
+
+  .user-list-overlay .denuncia:hover {
+    border-bottom: 1px solid red;
+  }
+  
+  .user-list-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-height: 80%;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .user-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .user-info {
+    flex-grow: 1;
+  }
+  
+  .follow-btn {
+    padding: 5px 10px;
+    background-color: #5036f5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    cursor: pointer;
+    color: #000;
+  }
+  
+  

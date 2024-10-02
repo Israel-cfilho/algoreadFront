@@ -1,0 +1,12 @@
+
+.profile-actions button{
+    margin: 5px;
+}
+
+.report {
+    color: gray;
+}
+
+.report:hover {
+    border-bottom: 1px solid gray;
+}
