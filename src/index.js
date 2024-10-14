@@ -1,17 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom/client'; // Importa corretamente createRoot
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AuthProvider } from './AuthContext/AuthContext'; // Certifique-se de que o caminho esteja correto
 
+// Cria a instância de root
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Usa root.render em vez de ReactDOM.render
 root.render(
-  <React.StrictMode>
+  <AuthProvider>
     <App />
-  </React.StrictMode>
+  </AuthProvider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Se quiser medir performance na sua aplicação, utilize reportWebVitals
 reportWebVitals();

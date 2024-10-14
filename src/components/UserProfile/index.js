@@ -44,7 +44,7 @@ export default function UserProfile({ isMyProfile }) {
                         <button onClick={handleFollowToggle}>
                             {isFollowing ? 'Seguindo' : 'Seguir'}
                         </button>
-                        <Link className='report' to={'/report'}>
+                        <Link className='report' to={`/report/${userId}/${userName}`}>
                             Denunciar perfil
                         </Link>
                     </div>

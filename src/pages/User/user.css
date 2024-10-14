@@ -59,9 +59,9 @@
 }
 
 .edit-profile button {
-    border: 1px solid #5036f5 ;
+    border: 1px solid #060556 ;
     border-radius: 4px;
-    background-color: #5036f5;
+    background-color: #060556;
     color: #ffffff;
     padding: 8px 12px;
     cursor: pointer;
@@ -70,11 +70,11 @@
 
 .edit-profile button:hover {
     background-color: transparent;
-    color: #5036f5;
+    color: #060556;
 }
 
 .edit-profile a:hover {
-    color: #003f72;
+    color: #060556;
 }
 
 .user-list-overlay {

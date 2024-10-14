@@ -1,0 +1,60 @@
+.header{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    padding: 20px 10px;
+    background-color: rgba(214, 228, 247, 1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-block-end: 3px solid #F4EDED;
+    box-shadow: 1px 1px 4px #060556;
+    justify-content: space-between;
+    height: 4.0em;
+    padding: 0 10%;
+  
+  
+  }
+  .nagivation-navbar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3em;
+  }
+  .nagivation-navbar a{
+    text-decoration: none;
+   
+  }
+  .nav-home{
+    color: #060556;
+    font-size: 1.1em;
+    text-decoration: none;
+    
+  
+  
+  }
+  
+  .nav-button {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #060556;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+   
+  }
+  .logo{
+    color: #060556;
+  }
+  
+  
+  
+   
+   
+    
+   
+    
+  
+  
+    

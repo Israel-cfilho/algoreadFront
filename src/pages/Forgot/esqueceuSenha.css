@@ -1,0 +1,83 @@
+.redefinir-container {
+    width: 500px;
+    height: 430px;
+    flex-shrink: 0;
+    background-color: rgba(255, 248, 248, 1);
+    border-radius: 20px;
+    border: 2px solid #060556;
+    padding: 100px;
+    text-align: center;
+  }
+  .redefinir-container h3{
+    text-align: center;
+    font-size: 30px;
+    color: #060556;
+    margin-top: -50px;
+  }
+
+
+.redefinir-container .form-senha{
+    position: relative;
+    width: 100%;
+    height: 60%;
+    margin: 60px auto;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    min-height: 20px;
+
+   
+}
+
+.redefinir-container button{
+    width: 100%;
+    height: 50px;
+    background-color: #060556;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px 0px rgba(6, 5, 86, 1 , 0.25);
+    cursor: pointer;
+    font-size: 25px;
+    color: #FFF;
+    margin-top: 50px;
+
+
+  }
+  .form-senha input{
+    position: relative;
+    width: 100%;
+    height: 35px;
+    background-color: #F4EDED;
+    outline: none;
+    border: 2px solid #060556;
+    box-shadow: 0px 4px 4px 0px rgba(6, 5, 86, 1 , 0.25);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: black;
+    padding: 20px 10px;
+  }
+  
+  .form-senha label{
+    color: #060556;
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+    margin-top: -25px;
+
+  }
+  .form-senha .icone{
+    position: absolute;
+    right: 13px;
+    top: 70%;
+    font-size: 16px;
+    color: black;
+    pointer-events: none;
+    transform: translateY(-100%);
+  }
+  p{
+   text-align-last: center;
+  }

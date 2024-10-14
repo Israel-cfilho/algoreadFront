@@ -5,7 +5,6 @@ import avatarDefault from '../../assets/avatar.png';
 import { FiEdit } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
-
 const UserList = ({ title, users, followingList, onClose }) => {
     const modalRef = useRef(null);
 
@@ -27,14 +26,25 @@ const UserList = ({ title, users, followingList, onClose }) => {
         users.map(user => followingList.some(follow => follow.profileName === user.profileName))
     );
 
-    const toggleFollow = (index) => {
+    const toggleFollow = async (index, user) => {
         const updatedStatus = [...followingStatus];
-        updatedStatus[index] = !updatedStatus[index];
+        const isFollowing = updatedStatus[index];
+        updatedStatus[index] = !isFollowing;
         setFollowingStatus(updatedStatus);
 
-        // Exibe toast de sucesso ao deixar de seguir
-        if (!updatedStatus[index]) {
-            toast.success("Deixou de seguir");
+        try {
+            if (isFollowing) {
+                // Chamada para o backend para "deixar de seguir"
+                await fetch(`/api/unfollow/${user.profileName}`, { method: 'POST' });
+                toast.success("Deixou de seguir");
+            } else {
+                // Chamada para o backend para "seguir"
+                await fetch(`/api/follow/${user.profileName}`, { method: 'POST' });
+                toast.success("Seguiu com sucesso");
+            }
+        } catch (error) {
+            console.error('Erro ao atualizar status de follow:', error);
+            toast.error("Erro ao atualizar o status");
         }
     };
 
@@ -48,16 +58,16 @@ const UserList = ({ title, users, followingList, onClose }) => {
                 <ul>
                     {users.map((user, index) => (
                         <li key={index} className="user-item">
-                            <Link><img src={user.avatar} alt="Avatar" className="avatar" /></Link>
+                            <Link><img src={user.avatar || avatarDefault} alt="Avatar" className="avatar" /></Link>
                             <div className="user-info">
                                 <Link to={'/Profile'}>
-                                <strong>{user.name}</strong>
-                                <p>@{user.profileName}</p>
+                                    <strong>{user.name}</strong>
+                                    <p>@{user.profileName}</p>
                                 </Link>
                             </div>
                             <button
                                 className="follow-btn"
-                                onClick={() => toggleFollow(index)}
+                                onClick={() => toggleFollow(index, user)}
                             >
                                 {followingStatus[index] ? "Seguindo" : "Seguir"}
                             </button>
@@ -70,30 +80,52 @@ const UserList = ({ title, users, followingList, onClose }) => {
 };
 
 export default function User() {
+    const [userData, setUserData] = useState({
+        name: '',
+        profileName: '',
+        avatar: avatarDefault,
+        email: '',
+    });
+
     const [showFollowers, setShowFollowers] = useState(false);
     const [showFollowing, setShowFollowing] = useState(false);
+    const [followers, setFollowers] = useState([]);
+    const [following, setFollowing] = useState([]);
 
-    const followers = [
-        { avatar: avatarDefault, name: "Usuário 1", profileName: "user1" },
-        { avatar: avatarDefault, name: "Usuário 2", profileName: "user2" }
-    ];
+    // Carregar dados do localStorage
+    useEffect(() => {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+            setUserData(JSON.parse(storedUserData));
+        }
+    }, []);
 
-    const following = [
-        { avatar: avatarDefault, name: "Usuário 3", profileName: "user3" },
-        { avatar: avatarDefault, name: "Usuário 4", profileName: "user4" }
-    ];
+    // Carregar lista de seguidores e seguidos do backend
+    useEffect(() => {
+        async function fetchUserLists() {
+            try {
+                const responseFollowers = await fetch('/api/followers'); // URL do endpoint de seguidores
+                const followersData = await responseFollowers.json();
 
-    // Filtrar seguidores que estão na lista de "Seguindo"
-    const filteredFollowers = followers.filter(follower => 
-        following.some(follow => follow.profileName === follower.profileName)
-    );
+                const responseFollowing = await fetch('/api/following'); // URL do endpoint de seguidos
+                const followingData = await responseFollowing.json();
+
+                setFollowers(followersData); // Atualizar o estado de seguidores
+                setFollowing(followingData); // Atualizar o estado de seguindo
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        }
+
+        fetchUserLists();
+    }, []);
 
     return (
         <div className='container-user'>
             <div className='profile'>
-                <img src={avatarDefault} alt='foto de perfil'/>
-                <h1>Nome do usuário</h1>
-                <p>Nome de usuário</p>
+                <img src={userData.avatar || avatarDefault} alt='foto de perfil'/>
+                <h1>{userData.name || "Nome do usuário"}</h1>
+                <p>{userData.profileName || "Nome de usuário"}</p>
 
                 <div className='stats'>
                     <div className='stat'>
@@ -115,7 +147,7 @@ export default function User() {
             {showFollowers && (
                 <UserList 
                     title="Seguidores" 
-                    users= {filteredFollowers} // Apenas os seguidores que você segue
+                    users={followers} 
                     followingList={following} 
                     onClose={() => setShowFollowers(false)} 
                 />

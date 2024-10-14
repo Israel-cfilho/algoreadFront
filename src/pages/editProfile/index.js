@@ -5,6 +5,7 @@ import avatarDefault from '../../assets/avatar.png'; // Avatar padrão
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+const token = "eyJhbGciOiJIUzI1NiIsImtpZCI6IkV2RWRGUm5Da1NJM25yakEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2VhYnJ1YWV2Y2twdmVwcXFxbWZ2LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI5MDRmNDJjYy03M2MzLTQ3ZWQtODdlNi01MDE3MzBlMTBkZjIiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzI4OTEyNjIwLCJpYXQiOjE3Mjg5MDkwMjAsImVtYWlsIjoiZXhhbXBsZUB0ZXN0Mi5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoiZXhhbXBsZUB0ZXN0Mi5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiOTA0ZjQyY2MtNzNjMy00N2VkLTg3ZTYtNTAxNzMwZTEwZGYyIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3Mjg5MDkwMjB9XSwic2Vzc2lvbl9pZCI6IjQ0ZDZlNzhlLWVkZWEtNDcxMi1hNWQzLTdlYjQ2YTdlYmQ0ZCIsImlzX2Fub255bW91cyI6ZmFsc2V9.DfC-ghPPXmOeeiyP0HYIPdFy33hd2k0fTisz6rpN5V4";
 
 export default function Profile({ updateUserData }) {
   const [formData, setFormData] = useState({
@@ -16,7 +17,6 @@ export default function Profile({ updateUserData }) {
   const [avatar, setAvatar] = useState(avatarDefault);
   const [selectedFile, setSelectedFile] = useState(null);
 
-  // Função para lidar com mudanças nos inputs do formulário
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -24,7 +24,6 @@ export default function Profile({ updateUserData }) {
     });
   };
 
-  // Função para lidar com mudanças no avatar (upload de imagem)
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
@@ -41,40 +40,41 @@ export default function Profile({ updateUserData }) {
   // Função para enviar o formulário para o backend e atualizar o estado do perfil
   const handleSubmit = (e) => {
     e.preventDefault(); // Previne o comportamento padrão de reload
-
+  
     // Cria um FormData para enviar os dados
     const formDataToSend = new FormData();
     formDataToSend.append('name', formData.name);
     formDataToSend.append('username', formData.profileName);
     formDataToSend.append('date', formData.birthDate);
-
-    if (selectedFile) {
-      formDataToSend.append('avatar', selectedFile); // Envia o avatar se tiver
-    }
-
-    fetch('http://25.52.167.55:5001/UserCreate/1', {
-      method: 'POST',
+  
+    // if (selectedFile) {
+    //   formDataToSend.append('avatar', selectedFile); // Envia o avatar se tiver
+    // }
+  
+    fetch('http://25.52.167.55:5001/UserModify', {
+      method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json', // Não defina isso
       },
-      body: JSON.stringify({
-        name: formData.name,
-        profileName: formData.profileName,
-        birthDate: formData.birthDate,
-      }),
+      body: JSON.stringify(formData) // Envie o FormData diretamente
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Erro ao atualizar perfil!');
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log(data);
-        // Atualiza o estado do perfil após a atualização bem-sucedida
         updateUserData({
           name: formData.name,
           profileName: formData.profileName,
           avatar: avatar,
         });
-        toast.success('Atualizado com sucesso!')
+        toast.success('Atualizado com sucesso!');
       })
-      .catch((error) => toast.error('Erro ao atualizar perfil!'));
+      .catch((error) => toast.error(error.message));
   };
 
   return (
@@ -83,9 +83,9 @@ export default function Profile({ updateUserData }) {
         <FiSettings size={18}/> Minha conta
       </h2>
 
-      <Link to={'/'}><button className='back'>Voltar</button></Link>
+      <Link to={'/user'}><button className='back'>Voltar</button></Link>
 
-      <div className='container'>
+      <div className='containers'>
         <form className='form-profile' onSubmit={handleSubmit}>
           <label className='label-avatar'>
             <span>

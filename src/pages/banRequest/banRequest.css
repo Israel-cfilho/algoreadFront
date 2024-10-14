@@ -1,0 +1,24 @@
+.form-banimento {
+    margin-top: 10px;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
+  .erro {
+    color: red;
+    font-size: 12px;
+  }
+  
+  .mensagem-confirmacao {
+    background-color: #dff0d8;
+    color: #3c763d;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  
